@@ -27,4 +27,9 @@ public class SensorServiceImpl implements SensorService {
             return null;
         }
     }
+
+    @Override
+    public Sensor getSensorDetailsAccordingToID(String sensorId) {
+        return sensorRepository.getSensorDetailsAccordingToID(sensorId);
+    }
 }

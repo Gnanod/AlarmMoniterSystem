@@ -56,6 +56,13 @@ public class SensorController {
 
     }
 
+    @GetMapping(value = "/getSensorDetailsAccordingToID/{sensorId}")
+    public Sensor getSensorDetailsAccordingToID(@PathVariable String sensorId){
+        System.out.println("GGG");
+        return sensorService.getSensorDetailsAccordingToID(sensorId);
+    }
+
+
     public static String getCurrentYear() {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy");

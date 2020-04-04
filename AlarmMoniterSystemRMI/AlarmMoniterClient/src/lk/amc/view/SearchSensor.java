@@ -21,15 +21,12 @@ public class SearchSensor extends javax.swing.JPanel {
     /**
      * Creates new form ManageSenor
      */
+    private Sensor sensor;
+
     public SearchSensor() {
         initComponents();
         this.setBackground(new Color(0xE5FFCC));
-        try {
-            String lastId = SensorController.getLastId();
-            txtSensorId.setText(lastId);
-        } catch (Exception ex) {
-            Logger.getLogger(SearchSensor.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
     /**
@@ -50,7 +47,7 @@ public class SearchSensor extends javax.swing.JPanel {
         txtFloorNumber = new javax.swing.JTextField();
         txtSensorId = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
 
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -74,10 +71,10 @@ public class SearchSensor extends javax.swing.JPanel {
 
         jLabel4.setText("Sensor Id");
 
-        jButton2.setText("Search");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSearchActionPerformed(evt);
             }
         });
 
@@ -101,7 +98,7 @@ public class SearchSensor extends javax.swing.JPanel {
                     .addComponent(txtSensorId)
                     .addComponent(txtRoomNumber))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(btnSearch)
                 .addContainerGap(180, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -111,7 +108,7 @@ public class SearchSensor extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSensorId, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFloorNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,11 +151,11 @@ public class SearchSensor extends javax.swing.JPanel {
             sensor.setStatus(status);
             boolean isAdded = SensorController.addSensor(sensor);
             if (isAdded) {
-                JOptionPane.showMessageDialog(this, "Sensoor Details Added Successfully");
+                JOptionPane.showMessageDialog(this, "Sensoor Details Updated Successfully");
                 String lastId = SensorController.getLastId();
                 txtSensorId.setText(lastId);
                 txtFloorNumber.setText(" ");
-                txtRoomNumber.setText(" ");   
+                txtRoomNumber.setText(" ");
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please Enter Valid Values to the Field");
@@ -171,15 +168,33 @@ public class SearchSensor extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        try {
+            String sensorId = txtSensorId.getText();
+            sensor = SensorController.getSensorDetailsAccordingToID(sensorId);
+            if (sensor != null) {
+                txtRoomNumber.setText(""+sensor.getRoomNumber());
+                txtFloorNumber.setText(""+sensor.getFloorNumber());
+                if(sensor.getStatus().equalsIgnoreCase("Active")){
+                    chkStatus.setSelected(true);
+                }else{
+                    chkStatus.setSelected(true);
+                }
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Sensor Details Not Found");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(SearchSensor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSearch;
     private javax.swing.JCheckBox chkStatus;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

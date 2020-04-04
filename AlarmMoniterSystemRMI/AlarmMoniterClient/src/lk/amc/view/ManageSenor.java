@@ -146,7 +146,8 @@ public class ManageSenor extends javax.swing.JPanel {
                 String lastId = SensorController.getLastId();
                 txtSensorId.setText(lastId);
                 txtFloorNumber.setText(" ");
-                txtRoomNumber.setText(" ");   
+                txtRoomNumber.setText(" ");
+                chkStatus.setSelected(false);
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please Enter Valid Values to the Field");
