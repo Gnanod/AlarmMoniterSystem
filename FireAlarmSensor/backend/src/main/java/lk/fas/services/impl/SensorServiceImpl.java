@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lk.fas.services.SensorService;
 
+import java.util.List;
+
 @Service
 public class SensorServiceImpl implements SensorService {
 
@@ -31,5 +33,16 @@ public class SensorServiceImpl implements SensorService {
     @Override
     public Sensor getSensorDetailsAccordingToID(String sensorId) {
         return sensorRepository.getSensorDetailsAccordingToID(sensorId);
+    }
+
+    @Override
+    public List<Sensor> getActiveSensorDetails() {
+
+        return sensorRepository.getActiveSensorDetails();
+    }
+
+    @Override
+    public List<Sensor> getAllSensorDetails() {
+        return sensorRepository.findAll();
     }
 }

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -22,17 +24,17 @@ public class SensorController {
 
     @PostMapping(value = "addSensor")
     public Sensor addSensor(@RequestBody Sensor sensor) {
-        System.out.println(sensor.getFloorNumber());
-        System.out.println(sensor.getRoomNumber());
-        System.out.println(sensor.getSensorId());
-        System.out.println(sensor.getSmokeLevel());
-        System.out.println(sensor.getStatus());
-        System.out.println(sensor);
-        System.out.println("GGGGGG");
+
         return sensorService.addSensor(sensor);
 
     }
 
+    @PostMapping(value = "updateSensor")
+    public Sensor updateSensorStatus(@RequestBody Sensor sensor) {
+
+        return sensorService.addSensor(sensor);
+
+    }
 
     @GetMapping(value = "/getLastID")
     public String getLastID() {
@@ -47,7 +49,6 @@ public class SensorController {
             numberFormat.setGroupingUsed(false);
             newID = "S" + getCurrentYear() + numberFormat.format(id);
 
-            //return newID;
         } else {
             newID="S" + getCurrentYear() + "0001";
         }
@@ -58,8 +59,37 @@ public class SensorController {
 
     @GetMapping(value = "/getSensorDetailsAccordingToID/{sensorId}")
     public Sensor getSensorDetailsAccordingToID(@PathVariable String sensorId){
-        System.out.println("GGG");
         return sensorService.getSensorDetailsAccordingToID(sensorId);
+    }
+
+    @GetMapping(value = "/getAllSensorDetails")
+    public List<Sensor> getAllSensorDetails(){
+        return sensorService.getAllSensorDetails();
+    }
+
+    @GetMapping(value = "/getActiveSensorDetails")
+    public List<Sensor> getActiveSensorDetails(){
+
+        updateSensorValues(sensorService.getActiveSensorDetails());
+        return sensorService.getActiveSensorDetails();
+    }
+
+    public void updateSensorValues(List<Sensor> senosr){
+        for (Sensor s: senosr
+             ) {
+            Sensor s1 = new Sensor();
+            s1.setRoomNumber(s.getRoomNumber());
+            s1.setFloorNumber(s.getFloorNumber());
+            s1.setSensorId(s.getSensorId());
+            s1.setStatus("Active");
+            s1.setSmokeLevel(getRandom(10));
+            s1.setCo2Level(getRandom(10));
+            sensorService.addSensor(s1);
+        }
+    }
+
+    public static int getRandom(int max){
+        return (int) (Math.random()*max);
     }
 
 

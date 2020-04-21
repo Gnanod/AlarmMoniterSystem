@@ -5,6 +5,8 @@ import lk.fas.Entity.Sensor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface SensorRepository extends JpaRepository<Sensor,String> {
 
 
@@ -14,4 +16,8 @@ public interface SensorRepository extends JpaRepository<Sensor,String> {
 
     @Query(value = "from Sensor where sensorId =?1")
     Sensor getSensorDetailsAccordingToID(String sensorId);
+
+    @Query(value = "from Sensor where status ='Active'")
+    List<Sensor> getActiveSensorDetails();
+
 }

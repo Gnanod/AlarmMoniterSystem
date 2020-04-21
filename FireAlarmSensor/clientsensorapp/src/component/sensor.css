@@ -1,0 +1,11 @@
+.MarginClass{
+    margin-top: 40px;
+}
+
+.activeClass{
+    color: limegreen;
+}
+
+.levelClass{
+    color: red;
+}
