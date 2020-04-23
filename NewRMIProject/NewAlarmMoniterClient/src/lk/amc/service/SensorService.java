@@ -28,4 +28,6 @@ public interface SensorService extends Remote{
     public Sensor getSensorDetailsAccordingToID(String sensorId)throws Exception;
     
     public boolean addUser(User user) throws Exception;
+    
+    public boolean loginUser(String username,String password) throws Exception;
 }

@@ -83,6 +83,7 @@ public class SensorDetails extends javax.swing.JPanel {
         
            try {
                //            ItemBrandNameDTO brandNameList = itemBrandNameController.searchItemBrandName(name);
+               
                List<Sensor> s1 =SensorController.getAllSensorDetails();
                
                dtm.setRowCount(0);

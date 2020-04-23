@@ -191,15 +191,51 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
 
     @Override
     public boolean addUser(User user) throws Exception {
-        System.out.println("GGGGGG");
+
+        System.out.println("hi");
+
         JSONObject userDetails = new JSONObject();
         userDetails.put("username", user.getUsername());
         userDetails.put("email", user.getEmail());
         userDetails.put("phoneNo", user.getPhoneNo());
         userDetails.put("password", user.getPassword());
+        System.out.println(user.getUsername());
         JSONObject userObject = new JSONObject();
         userObject.put("User", userDetails);
-        URL url = new URL("http://localhost:8080/SensorController/addUser");
+        URL url = new URL("http://localhost:8080/userController/addUser");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/json; utf-8");
+        con.setRequestProperty("Accept", "application/json");
+        con.setDoOutput(true);
+        String jsonInputString = userDetails.toString();
+        
+         try (OutputStream os = con.getOutputStream()) {
+            byte[] input = jsonInputString.getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(con.getInputStream(), "utf-8"))) {
+            StringBuilder response = new StringBuilder();
+            String responseLine = null;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+            System.out.println(response.toString());
+        }
+        con.disconnect();
+        return true;
+    }
+    
+     @Override
+    public boolean loginUser(String username,String password) throws Exception {
+        
+        JSONObject userDetails = new JSONObject();
+        userDetails.put("username", username);
+        userDetails.put("password", password);
+        JSONObject userObject = new JSONObject();
+        userObject.put("User", userDetails);
+        URL url = new URL("http://localhost:8080/userController/loginUser");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json; utf-8");

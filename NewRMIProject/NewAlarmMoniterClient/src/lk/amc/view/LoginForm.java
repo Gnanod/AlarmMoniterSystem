@@ -7,6 +7,7 @@ package lk.amc.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import lk.amc.controller.SensorController;
 
 /**
  *
@@ -143,6 +144,17 @@ public class LoginForm extends javax.swing.JFrame {
         
         String username=usernameTxt1.getText();
         String password=PasswordField2.getText();
+        
+        try{
+            
+             boolean isAdded = SensorController.loginUser(username, password);
+             
+              if (isAdded) {
+                  
+              }
+        }catch(Exception e){
+            
+        }
         
         MainFrame mn=new MainFrame();
         mn.setVisible(true);
