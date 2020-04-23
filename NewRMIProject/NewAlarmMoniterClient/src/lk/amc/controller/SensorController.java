@@ -52,15 +52,15 @@ public class SensorController {
     public static boolean addUser(User user) throws Exception{
        
          SensorService sensorService = ProxyHandler.getInstance().getService();
-          
+            System.out.println("divya");
          return sensorService.addUser(user);
          
     }
     
     public static boolean loginUser(String username,String password) throws Exception{
-       
+     
          SensorService sensorService = ProxyHandler.getInstance().getService();
-          
+         
          return sensorService.loginUser(username,password);
          
     }

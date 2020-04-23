@@ -148,6 +148,10 @@ public class LoginForm extends javax.swing.JFrame {
         try{
             
              boolean isAdded = SensorController.loginUser(username, password);
+             
+              if (isAdded) {
+                  
+              }
         }catch(Exception e){
             
         }

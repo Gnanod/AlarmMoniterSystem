@@ -156,16 +156,14 @@ public class Register extends javax.swing.JFrame {
             String phoneNo=phnlTxt2.getText();
             String password=PasswordField2.getText();
             String conpassword=ConPasswordField1.getText();
-            //Change this later
-              LoginForm mn=new LoginForm();
-              mn.setVisible(true);
-              dispose();
+          
             try{
              
                  if(password.equalsIgnoreCase(conpassword)){
                     
                      User user=new User(username,email,Integer.parseInt(phoneNo),password);
                       boolean isAdded = SensorController.addUser(user);
+                      System.out.println(" Succesfully!");
                       if (isAdded) {
                           System.out.println("Added Succesfully!");
                             JOptionPane.showMessageDialog(this, "User Details Added Successfully");
