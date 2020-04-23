@@ -8,6 +8,7 @@ package lk.amc.service;
 import java.rmi.Remote;
 import java.util.List;
 import lk.amc.dto.Sensor;
+import lk.amc.dto.User;
 
 /**
  *
@@ -25,4 +26,6 @@ public interface SensorService extends Remote{
     public List<Sensor> getAllSensorDetails()throws Exception;
 
     public Sensor getSensorDetailsAccordingToID(String sensorId)throws Exception;
+    
+    public boolean addUser(User user) throws Exception;
 }

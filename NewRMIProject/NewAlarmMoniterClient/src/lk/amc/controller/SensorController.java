@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lk.amc.ProxyHandler.ProxyHandler;
 import lk.amc.dto.Sensor;
+import lk.amc.dto.User;
 import lk.amc.service.SensorService;
 
 /**
@@ -46,5 +47,13 @@ public class SensorController {
         SensorService sensorService = ProxyHandler.getInstance().getService();
        
         return sensorService.getSensorDetailsAccordingToID(sensorId);
+    }
+    
+    public static boolean addUser(User user) throws Exception{
+       
+         SensorService sensorService = ProxyHandler.getInstance().getService();
+          
+         return sensorService.addUser(user);
+         
     }
 }

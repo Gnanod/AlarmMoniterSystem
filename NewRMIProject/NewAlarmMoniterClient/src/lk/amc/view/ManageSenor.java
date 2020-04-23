@@ -123,7 +123,7 @@ public class ManageSenor extends javax.swing.JPanel {
     }//GEN-LAST:event_chkStatusActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+            
         String sensorId = txtSensorId.getText();
         String floorNumber = txtFloorNumber.getText();
         String roomNumber = txtRoomNumber.getText();
