@@ -29,8 +29,8 @@ public class ServerStart {
             SensorService stub = new SensorServiceImpl();
             registry.rebind("sensor", stub);
             System.out.println("Server Has Been Started");
-            LoginForm r1=new LoginForm();
-            r1.setVisible(true);
+//            LoginForm r1=new LoginForm();
+//            r1.setVisible(true);
         } catch (RemoteException ex) {
             Logger.getLogger(ServerStart.class.getName()).log(Level.SEVERE, null, ex);
         }

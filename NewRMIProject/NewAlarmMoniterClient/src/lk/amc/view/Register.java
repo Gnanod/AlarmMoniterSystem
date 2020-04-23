@@ -157,7 +157,7 @@ public class Register extends javax.swing.JFrame {
             String password=PasswordField2.getText();
             String conpassword=ConPasswordField1.getText();
             //Change this later
-           LoginForm mn=new LoginForm();
+            LoginForm mn=new LoginForm();
             mn.setVisible(true);
             dispose();
             try{

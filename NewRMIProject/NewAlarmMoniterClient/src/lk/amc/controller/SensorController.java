@@ -52,7 +52,7 @@ public class SensorController {
     public static boolean addUser(User user) throws Exception{
        
          SensorService sensorService = ProxyHandler.getInstance().getService();
-          
+         
          return sensorService.addUser(user);
          
     }

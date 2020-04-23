@@ -191,7 +191,7 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
 
     @Override
     public boolean addUser(User user) throws Exception {
-        
+        System.out.println("GGGGGG");
         JSONObject userDetails = new JSONObject();
         userDetails.put("username", user.getUsername());
         userDetails.put("email", user.getEmail());
