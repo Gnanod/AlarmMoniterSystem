@@ -157,10 +157,11 @@ public class Register extends javax.swing.JFrame {
             String password=PasswordField2.getText();
             String conpassword=ConPasswordField1.getText();
             //Change this later
-           LoginForm mn=new LoginForm();
-            mn.setVisible(true);
-            dispose();
+              LoginForm mn=new LoginForm();
+              mn.setVisible(true);
+              dispose();
             try{
+             
                  if(password.equalsIgnoreCase(conpassword)){
                     
                      User user=new User(username,email,Integer.parseInt(phoneNo),password);
