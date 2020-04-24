@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping(value = "loginUser/{username}/{password}")
     public boolean loginUser(@PathVariable String username,@PathVariable String password) {
-
+            System.out.println("Spri");
         return userService.loginUser(username,password);
 
     }

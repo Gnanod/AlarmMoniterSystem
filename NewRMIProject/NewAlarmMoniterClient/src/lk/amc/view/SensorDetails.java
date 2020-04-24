@@ -5,6 +5,8 @@
  */
 package lk.amc.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,8 +19,12 @@ import lk.amc.dto.Sensor;
  *
  * @author Dakshika
  */
-public class SensorDetails extends javax.swing.JPanel {
+public class SensorDetails extends javax.swing.JPanel implements ActionListener{
 
+     javax.swing.Timer timer = new javax.swing.Timer(900,  this);
+     
+
+     
     /**
      * Creates new form SenosrDetails
      */
@@ -26,7 +32,8 @@ public class SensorDetails extends javax.swing.JPanel {
     public SensorDetails() {
         initComponents();
          dtm = (DefaultTableModel) sensorTable.getModel();
-        loadSernsorDetails();
+         timer.start();
+        
         
     }
 
@@ -83,7 +90,7 @@ public class SensorDetails extends javax.swing.JPanel {
         
            try {
                //            ItemBrandNameDTO brandNameList = itemBrandNameController.searchItemBrandName(name);
-               
+               //System.out.println("load");
                List<Sensor> s1 =SensorController.getAllSensorDetails();
                
                dtm.setRowCount(0);
@@ -97,6 +104,11 @@ public class SensorDetails extends javax.swing.JPanel {
                
                 
     }  
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        loadSernsorDetails();
+    }
         
     
 }
