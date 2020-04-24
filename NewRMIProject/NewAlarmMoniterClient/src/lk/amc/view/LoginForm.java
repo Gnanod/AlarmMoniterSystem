@@ -7,6 +7,7 @@ package lk.amc.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.JOptionPane;
 import lk.amc.controller.SensorController;
 
 /**
@@ -147,18 +148,26 @@ public class LoginForm extends javax.swing.JFrame {
         
         try{
             
-             boolean isAdded = SensorController.loginUser(username, password);
+             boolean istrue = SensorController.loginUser(username, password);
              
-              if (isAdded) {
+              if (istrue) {
+                  JOptionPane.showMessageDialog(this, "User Details Login Successfully");
+                  usernameTxt1.setText(" ");
+                  PasswordField2.setText(" ");
+                   MainFrame mn=new MainFrame();
+                    mn.setVisible(true);
+                    dispose();
                   
+              }else{
+                  JOptionPane.showMessageDialog(this, "User Details are Incorrect!");
+                  usernameTxt1.setText(" ");
+                  PasswordField2.setText(" ");
               }
         }catch(Exception e){
-            
+            JOptionPane.showMessageDialog(this, "Error Occured!");
         }
         
-        MainFrame mn=new MainFrame();
-        mn.setVisible(true);
-        dispose();
+       
     }//GEN-LAST:event_loginbutActionPerformed
 
     /**

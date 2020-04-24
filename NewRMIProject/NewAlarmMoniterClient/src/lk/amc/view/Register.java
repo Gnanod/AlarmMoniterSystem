@@ -157,32 +157,41 @@ public class Register extends javax.swing.JFrame {
             String password=PasswordField2.getText();
             String conpassword=ConPasswordField1.getText();
 
-            //Change this later
-            LoginForm mn=new LoginForm();
-            mn.setVisible(true);
-            dispose();
+           
 
             try{
+                if(isValidEmail(email)){
              
-                 if(password.equalsIgnoreCase(conpassword)){
+                     if(password.equalsIgnoreCase(conpassword)){
                     
-                     User user=new User(username,email,Integer.parseInt(phoneNo),password);
-                      boolean isAdded = SensorController.addUser(user);
-                      System.out.println(" Succesfully!");
-                      if (isAdded) {
-                          System.out.println("Added Succesfully!");
-                            JOptionPane.showMessageDialog(this, "User Details Added Successfully");
-                            usernameTxt1.setText(" ");
-                            emailTxt.setText(" ");
-                            phnlTxt2.setText(" ");
-                            PasswordField2.setText(" ");
-                            ConPasswordField1.setText(" ");
-                     }
+                        User user=new User(username,email,Integer.parseInt(phoneNo),password);
+                        boolean isAdded = SensorController.addUser(user);
+                        System.out.println(" Succesfully!");
+                            if (isAdded) {
+                                 System.out.println("Added Succesfully!");
+                                 JOptionPane.showMessageDialog(this, "User Details Added Successfully");
+                                usernameTxt1.setText(" ");
+                                emailTxt.setText(" ");
+                                phnlTxt2.setText(" ");
+                                PasswordField2.setText(" ");
+                                ConPasswordField1.setText(" ");
+                            
+                           
+                                    LoginForm mn=new LoginForm();
+                                    mn.setVisible(true);
+                                    dispose();
+                            }
                      
                       
-                 }
+                        }else{
+                            JOptionPane.showMessageDialog(this, "Password doesn't match!");
+                        }
+            
+                }else{
+                     JOptionPane.showMessageDialog(this, "Enter a valid Email Address!");      
+                }
             }catch(Exception e){
-                
+                JOptionPane.showMessageDialog(this, "Error!");    
             }
            
             
@@ -240,7 +249,10 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JTextField usernameTxt1;
     // End of variables declaration//GEN-END:variables
 
-
+ static boolean isValidEmail(String email) {
+      String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+      return email.matches(regex);
+   }
 
 
 }

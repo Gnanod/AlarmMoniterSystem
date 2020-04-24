@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * @author Dakshika
  */
 public class SensorServiceImpl extends UnicastRemoteObject implements SensorService {
-
+    private  Boolean res=false;
     public SensorServiceImpl() throws RemoteException {
 
     }
@@ -114,7 +114,7 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
         con.setRequestProperty("Content-Type", "application/json; utf-8");
         con.setRequestProperty("Accept", "application/json");
         int responseCode = con.getResponseCode();
-        System.out.println("GET Response Code :: " + responseCode);
+        //System.out.println("GET Response Code :: " + responseCode);
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
@@ -230,34 +230,34 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
      @Override
     public boolean loginUser(String username,String password) throws Exception {
         
-        JSONObject userDetails = new JSONObject();
-        userDetails.put("username", username);
-        userDetails.put("password", password);
-        JSONObject userObject = new JSONObject();
-        userObject.put("User", userDetails);
-        URL url = new URL("http://localhost:8080/userController/loginUser");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
+            User user=new User();
+        URL obj = new URL("http://localhost:8080/userController/loginUser/"+username+"/"+password);
+           
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json; utf-8");
         con.setRequestProperty("Accept", "application/json");
-        con.setDoOutput(true);
-        String jsonInputString = userDetails.toString();
+        int responseCode = con.getResponseCode();
         
-         try (OutputStream os = con.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes("utf-8");
-            os.write(input, 0, input.length);
-        }
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(con.getInputStream(), "utf-8"))) {
-            StringBuilder response = new StringBuilder();
-            String responseLine = null;
-            while ((responseLine = br.readLine()) != null) {
-                response.append(responseLine.trim());
+        if (responseCode == HttpURLConnection.HTTP_OK) { // success
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            if ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
             }
-            System.out.println(response.toString());
+            in.close();
+           System.out.println(response);
+           String result = response.toString();
+           res=Boolean.parseBoolean(result);
+             
+         } else {
+            System.out.println("Error Occured");
+            
         }
-        con.disconnect();
-        return true;
+        return res;
     }
 
 }
