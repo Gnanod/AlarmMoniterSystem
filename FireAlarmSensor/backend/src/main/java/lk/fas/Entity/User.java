@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
+// User Entity
+
 @Entity
 public class User {
 
@@ -15,6 +18,15 @@ public class User {
     private String email;
     private int phoneNo;
     private String password;
+    private String userStatus;
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
+    }
 
     public int getId() {
         return id;

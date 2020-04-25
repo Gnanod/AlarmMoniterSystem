@@ -3,6 +3,8 @@ package lk.fas.Entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+
+// Sensor Entity
 @Entity
 public class Sensor {
 

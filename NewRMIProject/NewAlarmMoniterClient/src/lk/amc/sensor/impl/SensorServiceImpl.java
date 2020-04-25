@@ -25,7 +25,9 @@ import org.json.JSONObject;
  * @author Dakshika
  */
 public class SensorServiceImpl extends UnicastRemoteObject implements SensorService {
-    private  Boolean res=false;
+
+    private Boolean res = false;
+
     public SensorServiceImpl() throws RemoteException {
 
     }
@@ -48,9 +50,9 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
         con.setRequestProperty("Content-Type", "application/json; utf-8");
         con.setRequestProperty("Accept", "application/json");
         con.setDoOutput(true);
-        String jsonInputString = sensorDetails.toString();
+        String jsonString = sensorDetails.toString();
         try (OutputStream os = con.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes("utf-8");
+            byte[] input = jsonString.getBytes("utf-8");
             os.write(input, 0, input.length);
         }
         try (BufferedReader br = new BufferedReader(
@@ -60,7 +62,6 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
             while ((responseLine = br.readLine()) != null) {
                 response.append(responseLine.trim());
             }
-            System.out.println(response.toString());
         }
         con.disconnect();
         return true;
@@ -75,29 +76,29 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
 
     @Override
     public String getLastId() throws Exception {
-        HttpURLConnection con = null;
+        HttpURLConnection connection = null;
         StringBuffer content = null;
         try {
             URL url = new URL("http://localhost:8080/SensorController/getLastID");
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setUseCaches(false);
-            con.setDoOutput(true);
-            con.setRequestProperty("Content-Type", "application/json");
-            String contentType = con.getHeaderField("Content-Type");
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setUseCaches(false);
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json");
+            String contentType = connection.getHeaderField("Content-Type");
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
             content = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
+            while ((inputLine = br.readLine()) != null) {
                 content.append(inputLine);
             }
-            in.close();
+            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (con != null) {
-                con.disconnect();
+            if (connection != null) {
+                connection.disconnect();
             }
         }
         return content.toString();
@@ -106,31 +107,31 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
     @Override
     public List<Sensor> getAllSensorDetails() throws Exception {
 
-        URL obj;
-        List<Sensor> list = null;
-        obj = new URL("http://localhost:8080/SensorController/getAllSensorDetails");
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-        con.setRequestProperty("Accept", "application/json");
-        int responseCode = con.getResponseCode();
+        URL url;
+        List<Sensor> sensorList = null;
+        url = new URL("http://localhost:8080/SensorController/getAllSensorDetails");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+        connection.setRequestProperty("Accept", "application/json");
+        int responseCode = connection.getResponseCode();
         //System.out.println("GET Response Code :: " + responseCode);
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    connection.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
+            while ((inputLine = br.readLine()) != null) {
                 response.append(inputLine);
             }
-            in.close();
+            br.close();
             String result = response.toString();
-            JSONArray array = new JSONArray(result);
+            JSONArray jsonArray = new JSONArray(result);
 
-            list = new ArrayList<>();
+            sensorList = new ArrayList<>();
 
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jobj = array.getJSONObject(i);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jobj = jsonArray.getJSONObject(i);
 
                 Sensor s = new Sensor();
                 s.setCo2Level(jobj.getInt("co2Level"));
@@ -139,12 +140,12 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
                 s.setSensorId(String.valueOf(jobj.getString("sensorId")));
                 s.setSmokeLevel(jobj.getInt("smokeLevel"));
                 s.setStatus(String.valueOf(jobj.getString("status")));
-                list.add(s);
+                sensorList.add(s);
             }
         } else {
-            System.out.println("Error Occured");
+
         }
-        return list;
+        return sensorList;
     }
 
     @Override
@@ -152,23 +153,23 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
 
         Sensor sensor = new Sensor();
 
-        URL obj = new URL("http://localhost:8080/SensorController/getSensorDetailsAccordingToID/" + sensorId);
+        URL url = new URL("http://localhost:8080/SensorController/getSensorDetailsAccordingToID/" + sensorId);
 
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-        con.setRequestProperty("Accept", "application/json");
-        int responseCode = con.getResponseCode();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+        connection.setRequestProperty("Accept", "application/json");
+        int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    connection.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
 
-            if ((inputLine = in.readLine()) != null) {
+            if ((inputLine = br.readLine()) != null) {
                 response.append(inputLine);
             }
-            in.close();
+            br.close();
 
             String result = response.toString();
 
@@ -179,12 +180,8 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
             sensor.setSensorId(String.valueOf(jobj.getString("sensorId")));
             sensor.setSmokeLevel(jobj.getInt("smokeLevel"));
             sensor.setStatus(String.valueOf(jobj.getString("status")));
-            
-            System.out.println("GG "+sensor.getStatus());
-               
 
         } else {
-            System.out.println("Error Occured");
         }
         return sensor;
     }
@@ -192,70 +189,65 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
     @Override
     public boolean addUser(User user) throws Exception {
 
-        System.out.println("hi");
-
         JSONObject userDetails = new JSONObject();
         userDetails.put("username", user.getUsername());
         userDetails.put("email", user.getEmail());
         userDetails.put("phoneNo", user.getPhoneNo());
         userDetails.put("password", user.getPassword());
-        System.out.println(user.getUsername());
-        JSONObject userObject = new JSONObject();
-        userObject.put("User", userDetails);
+        JSONObject userJsonObject = new JSONObject();
+        userJsonObject.put("User", userDetails);
         URL url = new URL("http://localhost:8080/userController/addUser");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-        con.setRequestProperty("Accept", "application/json");
-        con.setDoOutput(true);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setDoOutput(true);
         String jsonInputString = userDetails.toString();
-        
-         try (OutputStream os = con.getOutputStream()) {
+
+        try (OutputStream os = connection.getOutputStream()) {
             byte[] input = jsonInputString.getBytes("utf-8");
             os.write(input, 0, input.length);
         }
         try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(con.getInputStream(), "utf-8"))) {
+                new InputStreamReader(connection.getInputStream(), "utf-8"))) {
             StringBuilder response = new StringBuilder();
             String responseLine = null;
             while ((responseLine = br.readLine()) != null) {
                 response.append(responseLine.trim());
             }
-            System.out.println(response.toString());
         }
-        con.disconnect();
+        connection.disconnect();
         return true;
     }
-    
-     @Override
-    public boolean loginUser(String username,String password) throws Exception {
-        
-            User user=new User();
-        URL obj = new URL("http://localhost:8080/userController/loginUser/"+username+"/"+password);
-           
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-        con.setRequestProperty("Accept", "application/json");
-        int responseCode = con.getResponseCode();
-        
+
+    @Override
+    public boolean loginUser(String username, String password) throws Exception {
+
+        User user = new User();
+        URL obj = new URL("http://localhost:8080/userController/loginUser/" + username + "/" + password);
+
+        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Content-Type", "application/json; utf-8");
+        connection.setRequestProperty("Accept", "application/json");
+        int responseCode = connection.getResponseCode();
+
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    connection.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
 
-            if ((inputLine = in.readLine()) != null) {
+            if ((inputLine = br.readLine()) != null) {
                 response.append(inputLine);
             }
-            in.close();
-           System.out.println(response);
-           String result = response.toString();
-           res=Boolean.parseBoolean(result);
-             
-         } else {
+            br.close();
+            String result = response.toString();
+            res = Boolean.parseBoolean(result);
+
+        } else {
             System.out.println("Error Occured");
-            
+
         }
         return res;
     }

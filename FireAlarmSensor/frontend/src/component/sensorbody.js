@@ -14,10 +14,11 @@ import {
 import SensorChart from "./sensorchart";
 import Loader from 'react-loader-spinner';
 import './sensor.css'
-import * as pattern from "patternomaly";
+import * as Swal from "sweetalert2";
 
 export default class SensorBody extends Component {
     _isMounted = false;
+
 
     constructor(props) {
         super(props);
@@ -29,15 +30,20 @@ export default class SensorBody extends Component {
             sensorDetails: [],
             loaderStatus: true,
             chartData: [],
-            Data: {}
+            Data: {},
+
         }
+
     }
 
     componentDidMount() {
         this._isMounted = true;
+
+        //Set 10 seconds Time Interval
+
         this.interval = setInterval(() => {
             this.diplayDetails();
-        }, 40000);
+        }, 10000);
     }
 
     componentWillUnmount() {
@@ -50,10 +56,24 @@ export default class SensorBody extends Component {
 
             if (this._isMounted) {
 
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
                 const sensorResponse = response.data;
                 const newSensors = [];
                 let smokeColor ;
                 let co2Color ;
+
+                // set Sensor values to Bar Chart
 
                 for (let sensor in sensorResponse) {
                     const newValueData = [
@@ -62,11 +82,23 @@ export default class SensorBody extends Component {
                         sensorResponse[sensor].smokeLevel
                     ]
 
+                    // set Red color to chart while co2 level is above five
+
                     if(sensorResponse[sensor].co2Level >=5){
                         smokeColor = 'rgba(255,0,0,1.0)';
+                        Toast.fire({
+                            icon: 'warning',
+                            title: sensorResponse[sensor].sensorId +' Smoke Level has increased than the normal level ',
+                        })
                     }else{
                         smokeColor = 'rgba(75,192,192,1.0)';
+                        Toast.fire({
+                            icon: 'warning',
+                            title: sensorResponse[sensor].sensorId +' Co2 Level has increased than the normal level ',
+                        })
                     }
+
+                    // set Red color to chart while smoke level is above five
 
                     if(sensorResponse[sensor].smokeLevel >=5){
                         co2Color = 'rgba(255,0,0,1.0)';

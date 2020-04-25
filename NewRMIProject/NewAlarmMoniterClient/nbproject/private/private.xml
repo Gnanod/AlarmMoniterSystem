@@ -3,16 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/F:/SLIIT/Third%20Year/First%20Semester/DS/DSSensorProject/GITNew/NewRMIProject/NewAlarmMoniterClient/src/lk/amc/view/Register.java</file>
             <file>file:/F:/SLIIT/Third%20Year/First%20Semester/DS/DSSensorProject/GITNew/NewRMIProject/NewAlarmMoniterClient/src/lk/amc/sensor/impl/SensorServiceImpl.java</file>
-            <file>file:/F:/SLIIT/Third%20Year/First%20Semester/DS/DSSensorProject/GITNew/NewRMIProject/NewAlarmMoniterClient/src/lk/ams/startup/ServerStart.java</file>
+            <file>file:/F:/SLIIT/Third%20Year/First%20Semester/DS/DSSensorProject/GITNew/NewRMIProject/NewAlarmMoniterClient/src/lk/amc/view/ManageSenor.java</file>
             <file>file:/F:/SLIIT/Third%20Year/First%20Semester/DS/DSSensorProject/GITNew/NewRMIProject/NewAlarmMoniterClient/src/lk/amc/controller/SensorController.java</file>
-            <file>file:/F:/SLIIT/Third%20Year/First%20Semester/DS/DSSensorProject/GITNew/NewRMIProject/NewAlarmMoniterClient/src/lk/amc/view/LoginForm.java</file>
-            <file>file:/F:/SLIIT/Third%20Year/First%20Semester/DS/DSSensorProject/GITNew/NewRMIProject/NewAlarmMoniterClient/src/lk/amc/dto/User.java</file>
-=======
-            <file>file:/F:/DS/alarm/NewRMIProject/NewAlarmMoniterClient/src/lk/ams/startup/ServerStart.java</file>
->>>>>>> f1ae96046cdd737200249aed0e5141674e786efa
+            <file>file:/F:/SLIIT/Third%20Year/First%20Semester/DS/DSSensorProject/GITNew/NewRMIProject/NewAlarmMoniterClient/src/lk/amc/ProxyHandler/ProxyHandler.java</file>
+            <file>file:/F:/SLIIT/Third%20Year/First%20Semester/DS/DSSensorProject/GITNew/NewRMIProject/NewAlarmMoniterClient/src/lk/amc/service/SensorService.java</file>
         </group>
     </open-files>
 </project-private>

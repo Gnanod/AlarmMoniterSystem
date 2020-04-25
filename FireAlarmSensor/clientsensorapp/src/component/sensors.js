@@ -31,7 +31,7 @@ export default class Sensors extends Component {
         this._isMounted = true;
         this.interval = setInterval(() => {
             this.getAllSensorDetails();
-        }, 40000);
+        }, 10000);
 
     }
 
@@ -57,9 +57,6 @@ export default class Sensors extends Component {
                 sensorId+' Is Activated .After Few Seconds you can notify it',
                 'success'
             )
-            // if (this._isMounted) {
-            //     this.setState({sensorDetails: response.data});
-            // }
         }).catch(function (error) {
             console.log(error);
         })
@@ -72,8 +69,8 @@ export default class Sensors extends Component {
             sensorId :sensor.sensorId,
             floorNumber :sensor.floorNumber,
             roomNumber : sensor.roomNumber,
-            smokeLevel :sensor.smokeLevel,
-            co2Level : sensor.co2Level,
+            smokeLevel :parseInt("0"),
+            co2Level : parseInt("0"),
             status : 'Inactive'
         }
         axios.post('http://localhost:8080/SensorController/updateSensor',updatedSensor).then(response => {
@@ -83,10 +80,7 @@ export default class Sensors extends Component {
                 sensorId+' Is Inactivated .After Few Seconds you can notify it',
                 'success'
             )
-            // this.setState({sensorDetails: response.data});
-            // if (this._isMounted) {
-            //     this.setState({sensorDetails: response.data});
-            // }
+
         }).catch(function (error) {
             console.log(error);
         })

@@ -15,6 +15,7 @@ public class UserController {
     private UserService userService;
 
 
+    // Add User Details To Database
     @PostMapping(value = "addUser")
     public User addUser(@RequestBody User user) {
 
@@ -22,9 +23,9 @@ public class UserController {
 
     }
 
+    // Check user credentials using username and password
     @GetMapping(value = "loginUser/{username}/{password}")
     public boolean loginUser(@PathVariable String username,@PathVariable String password) {
-            System.out.println("Spri");
         return userService.loginUser(username,password);
 
     }

@@ -49,7 +49,7 @@ public class SearchSensor extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
 
-        jButton1.setText("Save");
+        jButton1.setText("Update");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -140,7 +140,7 @@ public class SearchSensor extends javax.swing.JPanel {
         if (chkStatus.isSelected()) {
             status = "Active";
         } else {
-            status = "inActive";
+            status = "InActive";
         }
         Sensor sensor = new Sensor();
 
