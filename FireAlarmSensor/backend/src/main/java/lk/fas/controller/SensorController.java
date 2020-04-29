@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 @CrossOrigin
 @RestController
@@ -113,9 +114,11 @@ public class SensorController {
             List<User> loggedUsers = getLoggedUserDetails();  // Get Currently Active users
             if(smokeLevel >=5){
                 sendMessage(loggedUsers, s.getSensorId(),smokeLevel,"Smoke");
+                System.out.println("Smoke Level above 5");
             }
             if(co2Level >=5){
                 sendMessage(loggedUsers, s.getSensorId(),co2Level,"Co2");
+                System.out.println("Co2 Level above 5");
             }
             sensorService.addSensor(s1);
         }
@@ -124,28 +127,41 @@ public class SensorController {
     private void sendMessage(List<User> loggedUsers, String sensorId, int level, String type) {
 
         for (User user: loggedUsers ) {
+            System.out.println("HHHHHHHH");
             if(type.equals("Smoke")){
-                sendTextMessage("Smoke",user);
+                System.out.println("HHHHHKKKKKKKKKKKKk");
+               // sendTextMessage("Smoke",user);
             }else{
-                sendTextMessage("Co2",user);
+                System.out.println("HHHHHKKKKKKKKKKKKkLLLLLLLLLLLl");
+               // sendTextMessage("Co2",user);
             }
         }
     }
 
     public void sendTextMessage(String type,User user){
-        String msg = " " ;
-        String number = "94" + Integer.toString(user.getPhoneNo()).substring(1);
-        String accountName = " ";
-        String password = " ";
+        String msg = "Dear%20valuable%20customer,%20we%20started%20servicing%20your%20vehicle.%20-TurismoAuto" ;
+//        String number = "94" + Integer.toString(user.getPhoneNo()).substring(1);
+        String number = "94" + 772218111;
+        String accountName = "94772218111";
+        String password = "8694";
+        System.out.println("hhhhhhh");
         URL textit = null;
+//        HttpURLConnection connection = null;
         try {
-            textit = new URL("http://textit.biz/sendmsg/index.php?id=" + accountName + "&pw=" + password + "&to=" + number + "&text=Dear valuable customer, we started servicing your vehicle. -TurismoAuto");
+            textit = new URL("http://textit.biz/sendmsg/index.php?id=" + accountName + "&pw=" + password + "&to=" + number + "&text="+msg);
+//            connection = (HttpURLConnection) url.openConnection();
+//            connection.setRequestMethod("GET");
+//            connection.setUseCaches(false);
+//            connection.setDoOutput(true);
+//            connection.setRequestProperty("Content-Type", "application/json");
+//            String contentType = connection.getHeaderField("Content-Type");
             BufferedReader in = new BufferedReader(new InputStreamReader(textit.openStream()));
+
             String inputLine;
-            while ((inputLine = in.readLine()) != null)
-                System.out.println(inputLine);
+            while((inputLine = in.readLine()) != null)
+                System.out.println("GGG"+inputLine);
             in.close();
-        } catch (MalformedURLException e) {
+        }catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -157,6 +173,9 @@ public class SensorController {
         return ((int) (Math.random()*(maxNumber - minNumber))) + minNumber;
     }
 
+    public void sendEmail(){
+
+    }
 
 
     // this method is used to get current year (to create Last id)
