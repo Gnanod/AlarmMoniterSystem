@@ -134,71 +134,51 @@ public class SensorController {
             System.out.println(user.getEmail());
             if(type.equals("Smoke")){
                 System.err.println("Mail Co2");
-                try {
-                    final String fromEmail = "ruvini.hfb@gmail.com"; //requires valid gmail id
-                    final String password = "Ruv@1234"; // correct password for gmail id
-                    final String toEmail = user.getEmail(); // can be any email id
-
-                    System.out.println("TLSEmail Start");
-                    Properties props = new Properties();
-                    props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
-                    props.put("mail.smtp.port", "587"); //TLS Port
-                    props.put("mail.smtp.auth", "true"); //enable authentication
-                    props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
-
-                    //create Authenticator object to pass in Session.getInstance argument
-                    Authenticator auth = new Authenticator() {
-                        //override the getPasswordAuthentication method
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(fromEmail, password);
-                        }
-                    };
-                    Session session = Session.getInstance(props, auth);
-                    System.err.println("Mail Sending");
-
-                    EmailUtil.sendEmail(session, toEmail,"Smoke Level Alert", "Smoke level has increased than usual.(5)Please Take Necessary Steps! ThankYou");
-
-                    //sendTextMessage("Smoke",user,sensorId,level);
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+                sendTextMessage("Co2",user,sensorId,level);
+                sendEmail("Co2",user,sensorId,level);
             }else{
-
-                try {
-                    final String fromEmail = "ruvini.hfb@gmail.com"; //requires valid gmail id
-                    final String password = "Ruv@1234"; // correct password for gmail id
-                    final String toEmail = user.getEmail(); // can be any email id
-
-                    System.out.println("TLSEmail Start");
-                    Properties props = new Properties();
-                    props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
-                    props.put("mail.smtp.port", "587"); //TLS Port
-                    props.put("mail.smtp.auth", "true"); //enable authentication
-                    props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
-
-                    //create Authenticator object to pass in Session.getInstance argument
-                    Authenticator auth = new Authenticator() {
-                        //override the getPasswordAuthentication method
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(fromEmail, password);
-                        }
-                    };
-                    Session session = Session.getInstance(props, auth);
-                    System.err.println("Mail Sending");
-
-                    EmailUtil.sendEmail(session, toEmail,"CO2 Alert", "CO2 Smoke level has increased than usual.(5)Please Take Necessary Steps! ThankYou");
-                    //sendTextMessage("Co2",user,sensorId,level);
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
+                sendTextMessage("Co2",user,sensorId,level);
+                sendEmail("Co2",user,sensorId,level);
             }
+        }
+    }
+
+    public void sendEmail(String type,User user,String sensorId,int level){
+        try {
+            final String fromEmail = " "; //requires valid gmail id
+            final String password = " "; // correct password for gmail id
+            final String toEmail = "1995gnanod@gmail.com"; // can be any email id
+//                    final String toEmail = user.getEmail(); // can be any email id
+
+            System.out.println("TLSEmail Start");
+            Properties props = new Properties();
+            props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+            props.put("mail.smtp.port", "587"); //TLS Port
+            props.put("mail.smtp.auth", "true"); //enable authentication
+            props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+
+            //create Authenticator object to pass in Session.getInstance argument
+            Authenticator auth = new Authenticator() {
+                //override the getPasswordAuthentication method
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(fromEmail, password);
+                }
+            };
+            Session session = Session.getInstance(props, auth);
+            System.err.println("Mail Sending");
+
+            EmailUtil.sendEmail(session, toEmail,type+"Level Alert", type+" level has increased than usual.(5)Please Take Necessary Steps! ThankYou");
+
+            //sendTextMessage("Smoke",user,sensorId,level);
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void sendTextMessage(String type,User user,String sensorId,int level){
         String msg = "Enter%20Message" ;  // to spaces use %20 examle---->  Hi Hi Hi   ===> Hi%20Hi%20%20
-        String number = "94" + Integer.toString(user.getPhoneNo()).substring(1);
+        System.out.println("Phone Number :"+Integer.toString(user.getPhoneNo()));
+        String number = "94" + Integer.toString(user.getPhoneNo());
        // String number = "94" + 772218111;
         String accountName = "94772218111";
         String password = "8694";
