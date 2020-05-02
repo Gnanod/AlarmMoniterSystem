@@ -3,11 +3,15 @@ package fas.controller;
 
 import fas.Entity.Sensor;
 import fas.Entity.User;
+import fas.services.EmailUtil;
 import fas.services.SensorService;
 import fas.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,6 +22,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 @CrossOrigin
 @RestController
@@ -123,13 +128,70 @@ public class SensorController {
     }
 
     private void sendMessage(List<User> loggedUsers, String sensorId, int level, String type) {
+        System.out.println("Mail Sending");
 
         for (User user: loggedUsers ) {
-
+            System.out.println(user.getEmail());
             if(type.equals("Smoke")){
-                sendTextMessage("Smoke",user,sensorId,level);
+                System.err.println("Mail Co2");
+                try {
+                    final String fromEmail = "ruvini.hfb@gmail.com"; //requires valid gmail id
+                    final String password = "Ruv@1234"; // correct password for gmail id
+                    final String toEmail = user.getEmail(); // can be any email id
+
+                    System.out.println("TLSEmail Start");
+                    Properties props = new Properties();
+                    props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+                    props.put("mail.smtp.port", "587"); //TLS Port
+                    props.put("mail.smtp.auth", "true"); //enable authentication
+                    props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+
+                    //create Authenticator object to pass in Session.getInstance argument
+                    Authenticator auth = new Authenticator() {
+                        //override the getPasswordAuthentication method
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(fromEmail, password);
+                        }
+                    };
+                    Session session = Session.getInstance(props, auth);
+                    System.err.println("Mail Sending");
+
+                    EmailUtil.sendEmail(session, toEmail,"Smoke Level Alert", "Smoke level has increased than usual.(5)Please Take Necessary Steps! ThankYou");
+
+                    //sendTextMessage("Smoke",user,sensorId,level);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }else{
-                sendTextMessage("Co2",user,sensorId,level);
+
+                try {
+                    final String fromEmail = "ruvini.hfb@gmail.com"; //requires valid gmail id
+                    final String password = "Ruv@1234"; // correct password for gmail id
+                    final String toEmail = user.getEmail(); // can be any email id
+
+                    System.out.println("TLSEmail Start");
+                    Properties props = new Properties();
+                    props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+                    props.put("mail.smtp.port", "587"); //TLS Port
+                    props.put("mail.smtp.auth", "true"); //enable authentication
+                    props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+
+                    //create Authenticator object to pass in Session.getInstance argument
+                    Authenticator auth = new Authenticator() {
+                        //override the getPasswordAuthentication method
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(fromEmail, password);
+                        }
+                    };
+                    Session session = Session.getInstance(props, auth);
+                    System.err.println("Mail Sending");
+
+                    EmailUtil.sendEmail(session, toEmail,"CO2 Alert", "CO2 Smoke level has increased than usual.(5)Please Take Necessary Steps! ThankYou");
+                    //sendTextMessage("Co2",user,sensorId,level);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
