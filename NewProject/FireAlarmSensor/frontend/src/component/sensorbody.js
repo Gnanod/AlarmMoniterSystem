@@ -88,20 +88,21 @@ export default class SensorBody extends Component {
                         smokeColor = 'rgba(255,0,0,1.0)';
                         Toast.fire({
                             icon: 'warning',
-                            title: sensorResponse[sensor].sensorId +' Smoke Level has increased than the normal level ',
+                            title: sensorResponse[sensor].sensorId +' Co2 Level has increased than the normal level ',
                         })
                     }else{
                         smokeColor = 'rgba(75,192,192,1.0)';
-                        Toast.fire({
-                            icon: 'warning',
-                            title: sensorResponse[sensor].sensorId +' Co2 Level has increased than the normal level ',
-                        })
+
                     }
 
                     // set Red color to chart while smoke level is above five
 
                     if(sensorResponse[sensor].smokeLevel >=5){
                         co2Color = 'rgba(255,0,0,1.0)';
+                        Toast.fire({
+                            icon: 'warning',
+                            title: sensorResponse[sensor].sensorId +' Smoke Level has increased than the normal level ',
+                        })
                     }else{
                         co2Color = 'rgba(75,192,192,1.0)';
                     }
