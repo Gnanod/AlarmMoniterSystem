@@ -134,10 +134,10 @@ public class SensorController {
             System.out.println(user.getEmail());
             if(type.equals("Smoke")){
                 System.err.println("Mail Co2");
-                sendTextMessage("Co2",user,sensorId,level);
+               // sendTextMessage("Co2",user,sensorId,level);
                 sendEmail("Co2",user,sensorId,level);
             }else{
-                sendTextMessage("Co2",user,sensorId,level);
+             //   sendTextMessage("Co2",user,sensorId,level);
                 sendEmail("Co2",user,sensorId,level);
             }
         }
@@ -145,8 +145,8 @@ public class SensorController {
 
     public void sendEmail(String type,User user,String sensorId,int level){
         try {
-            final String fromEmail = " "; //requires valid gmail id
-            final String password = " "; // correct password for gmail id
+            final String fromEmail = "1995gnanod@gmail.com"; //requires valid gmail id
+            final String password = "sulagelelena"; // correct password for gmail id
             final String toEmail = "1995gnanod@gmail.com"; // can be any email id
 //                    final String toEmail = user.getEmail(); // can be any email id
 

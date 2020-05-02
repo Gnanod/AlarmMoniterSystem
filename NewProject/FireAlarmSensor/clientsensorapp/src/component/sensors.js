@@ -22,6 +22,7 @@ export default class Sensors extends Component {
         this.getAllSensorDetails = this.getAllSensorDetails.bind(this);
         this.activeSensor = this.activeSensor.bind(this);
         this.InactiveSensor = this.InactiveSensor.bind(this);
+        this.sendStatus = this.sendStatus.bind(this);
         this.state = {
             sensorDetails: []
         }
@@ -31,6 +32,7 @@ export default class Sensors extends Component {
         this._isMounted = true;
         this.interval = setInterval(() => {
             this.getAllSensorDetails();
+            this.sendStatus ();
         }, 10000);
 
     }
@@ -61,6 +63,20 @@ export default class Sensors extends Component {
             console.log(error);
         })
 
+    }
+
+    sendStatus(){
+        this.sensorDetails.map(sensor=>{
+            axios.post('http://localhost:8080/SensorController/updateSensor',sensor).then(response => {
+                // Swal.fire(
+                //     '',
+                //     sensorId+' Is Activated .After Few Seconds you can notify it',
+                //     'success'
+                // )
+            }).catch(function (error) {
+                console.log(error);
+            })
+        })
     }
 
     InactiveSensor(sensor) {
