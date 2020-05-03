@@ -152,7 +152,7 @@ export default class SensorBody extends Component {
                                 <MDBCol className="text-white text-center  px-2 my-2"
                                         style={{backgroundImage: `url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg)`}}>
                                     <MDBCol className="py-5">
-                                        <MDBCardTitle className="h1-responsive pt-3 m-5 font-bold">Seonsor
+                                        <MDBCardTitle className="h1-responsive pt-3 m-5 font-bold">Sensor
                                             Details</MDBCardTitle>
 
                                     </MDBCol>
