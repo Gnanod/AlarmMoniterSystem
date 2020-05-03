@@ -13,7 +13,8 @@ import {
 import './sensor.css'
 import axios from "axios";
 import 'sweetalert2/src/sweetalert2.scss';
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import Loader from 'react-loader-spinner';
 
 export default class Sensors extends Component {
     _isMounted = false;
@@ -24,7 +25,8 @@ export default class Sensors extends Component {
         this.InactiveSensor = this.InactiveSensor.bind(this);
         this.sendStatus = this.sendStatus.bind(this);
         this.state = {
-            sensorDetails: []
+            sensorDetails: [],
+            loaderStatus: true,
         }
     }
 
@@ -66,7 +68,7 @@ export default class Sensors extends Component {
     }
 
     sendStatus(){
-        this.sensorDetails.map(sensor=>{
+        this.state.sensorDetails.map(sensor=>{
             axios.post('http://localhost:8080/SensorController/updateSensor',sensor).then(response => {
                 // Swal.fire(
                 //     '',
@@ -106,7 +108,10 @@ export default class Sensors extends Component {
     getAllSensorDetails() {
         axios.get('http://localhost:8080/SensorController/getAllSensorDetails').then(response => {
             if (this._isMounted) {
-                this.setState({sensorDetails: response.data});
+                this.setState({
+                    sensorDetails: response.data,
+                    loaderStatus: false
+                });
             }
 
         }).catch(function (error) {
@@ -134,38 +139,59 @@ export default class Sensors extends Component {
                         </MDBCol>
                     </MDBRow>
                 </MDBContainer>
-                <MDBContainer>
 
-                    <MDBRow>
-                        {
-                            this.state.sensorDetails.map(sensor => {
-                                return (
-                                    <MDBCol size="4" className="MarginClass" key={sensor.sensorId}>
-                                        <MDBCard style={{width: "22rem"}}>
-                                            <MDBCardBody>
-                                                <MDBCardTitle>{sensor.sensorId}</MDBCardTitle>
-                                                <MDBCardTitle>Floor Number :{sensor.floorNumber}
-                                                </MDBCardTitle>
-                                                <MDBCardTitle>Room Number :{sensor.roomNumber} </MDBCardTitle>
-                                                <MDBCardTitle>Co2 Level :<span className="levelClass">{sensor.co2Level}</span> </MDBCardTitle>
-                                                <MDBCardTitle>Smoke Level :<span className="levelClass">{sensor.smokeLevel}</span> </MDBCardTitle>
-                                                <MDBCardTitle>Status : <span
-                                                    className="activeClass"> {sensor.status}</span> </MDBCardTitle>
-                                                <MDBBtn onClick={() => this.activeSensor(sensor)}>Active Status</MDBBtn>
-                                                <MDBBtn onClick={() => this.InactiveSensor(sensor)}>Inactive Status</MDBBtn>
+                {
+                    this.state.loaderStatus ?
+                        <Loader className="loaderClass"
 
-                                            </MDBCardBody>
-                                        </MDBCard>
-                                    </MDBCol>
-                                )
-                            })
+                                type="Audio"
+                                color="#00BFFF"
+                                height={400}
+                                width={250}
+                                timeout={30000} //3 secs
 
-                        }
+                        /> :
+
+                        <MDBContainer>
+
+                            <MDBRow>
+                                {
+                                    this.state.sensorDetails.map(sensor => {
+                                        return (
+                                            <MDBCol size="4" className="MarginClass" key={sensor.sensorId}>
+                                                <MDBCard style={{width: "22rem"}}>
+                                                    <MDBCardBody>
+                                                        <MDBCardTitle>{sensor.sensorId}</MDBCardTitle>
+                                                        <MDBCardTitle>Floor Number :{sensor.floorNumber}
+                                                        </MDBCardTitle>
+                                                        <MDBCardTitle>Room Number :{sensor.roomNumber} </MDBCardTitle>
+                                                        <MDBCardTitle>Co2 Level :<span
+                                                            className="levelClass">{sensor.co2Level}</span>
+                                                        </MDBCardTitle>
+                                                        <MDBCardTitle>Smoke Level :<span
+                                                            className="levelClass">{sensor.smokeLevel}</span>
+                                                        </MDBCardTitle>
+                                                        <MDBCardTitle>Status : <span
+                                                            className="activeClass"> {sensor.status}</span>
+                                                        </MDBCardTitle>
+                                                        <MDBBtn onClick={() => this.activeSensor(sensor)}>Active
+                                                            Status</MDBBtn>
+                                                        <MDBBtn onClick={() => this.InactiveSensor(sensor)}>Inactive
+                                                            Status</MDBBtn>
+
+                                                    </MDBCardBody>
+                                                </MDBCard>
+                                            </MDBCol>
+                                        )
+                                    })
+
+                                }
 
 
-                    </MDBRow>
+                            </MDBRow>
 
-                </MDBContainer>
+                        </MDBContainer>
+                }
             </div>
         );
     }
