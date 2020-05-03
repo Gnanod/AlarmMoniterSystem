@@ -123,7 +123,7 @@ public class SensorController {
                 sendMessage(loggedUsers, s.getSensorId(),co2Level,"Co2");
                 System.out.println("Co2 Level above 5");
             }
-            sensorService.addSensor(s1);
+            sensorService.updateSensor(co2Level,smokeLevel,s.getSensorId());
         }
     }
 

@@ -6,6 +6,7 @@ import fas.repository.SensorRepository;
 import fas.services.SensorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -45,5 +46,11 @@ public class SensorServiceImpl implements SensorService {
     @Override
     public List<Sensor> getAllSensorDetails() {
         return sensorRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void updateSensor(int co2Level, int smokeLevel, String sensorId) {
+       sensorRepository.updateSensor(co2Level,smokeLevel,sensorId);
     }
 }

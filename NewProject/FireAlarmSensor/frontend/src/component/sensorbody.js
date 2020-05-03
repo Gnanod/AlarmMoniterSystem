@@ -165,7 +165,6 @@ export default class SensorBody extends Component {
                 {
                     this.state.loaderStatus ?
                         <Loader className="loaderClass"
-
                                 type="Audio"
                                 color="#00BFFF"
                                 height={400}

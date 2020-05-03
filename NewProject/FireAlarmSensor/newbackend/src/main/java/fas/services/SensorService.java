@@ -16,4 +16,6 @@ public interface SensorService {
     List<Sensor> getActiveSensorDetails();
 
     List<Sensor> getAllSensorDetails();
+
+    void updateSensor(int co2Level, int smokeLevel, String sensorId);
 }
