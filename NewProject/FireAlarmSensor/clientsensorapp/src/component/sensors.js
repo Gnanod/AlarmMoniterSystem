@@ -55,6 +55,11 @@ export default class Sensors extends Component {
             co2Level : sensor.co2Level,
             status : 'Active'
         }
+        this.state.sensorDetails.map(sen=>{
+            if(sensor.sensorId===sen.sensorId){
+                sen.status='Active';
+            }
+        })
         axios.post('http://localhost:8080/SensorController/updateSensor',updatedSensor).then(response => {
             Swal.fire(
                 '',
@@ -91,6 +96,11 @@ export default class Sensors extends Component {
             co2Level : parseInt("0"),
             status : 'Inactive'
         }
+        this.state.sensorDetails.map(sen=>{
+            if(sensor.sensorId===sen.sensorId){
+                sen.status='Inactive';
+            }
+        })
         axios.post('http://localhost:8080/SensorController/updateSensor',updatedSensor).then(response => {
 
             Swal.fire(
