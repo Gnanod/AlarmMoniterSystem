@@ -5,6 +5,7 @@
  */
 package lk.amc.view;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -19,9 +20,9 @@ import lk.amc.dto.Sensor;
  *
  * @author Dakshika
  */
-public class SensorDetails extends javax.swing.JPanel implements ActionListener{
+public class SensorDetails extends javax.swing.JPanel implements ActionListener {
 
-     javax.swing.Timer timer = new javax.swing.Timer(900,  this);
+     javax.swing.Timer timer = new javax.swing.Timer(5000,  this);
      
 
      
@@ -97,6 +98,13 @@ public class SensorDetails extends javax.swing.JPanel implements ActionListener{
                for(Sensor s2 :s1){
                    Object[] rowData = {s2.getStatus(),s2.getSensorId(),s2.getFloorNumber(),s2.getRoomNumber(),s2.getSmokeLevel(),s2.getCo2Level()};
                    dtm.addRow(rowData);
+                   if(s2.getCo2Level()>5){
+                        setForeground(Color.RED);
+                       JOptionPane.showMessageDialog(this, "C02 Levels of the sensor "+s2.getSensorId()+" has increased than ususal!");
+                   }
+                   if(s2.getSmokeLevel()>5){
+                       JOptionPane.showMessageDialog(this, "Smoke Levels of the sensor "+s2.getSensorId()+" has increased than usual!");
+                   }
                }
            } catch (Exception ex) {
                Logger.getLogger(SensorDetails.class.getName()).log(Level.SEVERE, null, ex);
