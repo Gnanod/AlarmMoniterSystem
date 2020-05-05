@@ -5,6 +5,7 @@
  */
 package lk.amc.view;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -19,22 +20,20 @@ import lk.amc.dto.Sensor;
  *
  * @author Dakshika
  */
-public class SensorDetails extends javax.swing.JPanel implements ActionListener{
+public class SensorDetails extends javax.swing.JPanel implements ActionListener {
 
-     javax.swing.Timer timer = new javax.swing.Timer(900,  this);
-     
+    javax.swing.Timer timer = new javax.swing.Timer(900, this);
 
-     
     /**
      * Creates new form SenosrDetails
      */
     private DefaultTableModel dtm;
+
     public SensorDetails() {
         initComponents();
-         dtm = (DefaultTableModel) sensorTable.getModel();
-         timer.start();
-        
-        
+        dtm = (DefaultTableModel) sensorTable.getModel();
+        timer.start();
+
     }
 
     /**
@@ -59,6 +58,7 @@ public class SensorDetails extends javax.swing.JPanel implements ActionListener{
             new String [] {
                 "Status", "Sensor Id", "Floor Number", "Room Number", "Smoke Level", "Co2 Level"
             }
+
         ));
         jScrollPane1.setViewportView(sensorTable);
 
@@ -87,28 +87,33 @@ public class SensorDetails extends javax.swing.JPanel implements ActionListener{
     // End of variables declaration//GEN-END:variables
 
     private void loadSernsorDetails() {
-        
-           try {
+
+        try {
                //            ItemBrandNameDTO brandNameList = itemBrandNameController.searchItemBrandName(name);
-               //System.out.println("load");
-               List<Sensor> s1 =SensorController.getAllSensorDetails();
-               
-               dtm.setRowCount(0);
-               for(Sensor s2 :s1){
-                   Object[] rowData = {s2.getStatus(),s2.getSensorId(),s2.getFloorNumber(),s2.getRoomNumber(),s2.getSmokeLevel(),s2.getCo2Level()};
-                   dtm.addRow(rowData);
-               }
-           } catch (Exception ex) {
-               Logger.getLogger(SensorDetails.class.getName()).log(Level.SEVERE, null, ex);
-           }
-               
-                
-    }  
+            //System.out.println("load");
+            List<Sensor> s1 = SensorController.getAllSensorDetails();
+
+            dtm.setRowCount(0);
+            for (Sensor s2 : s1) {
+                Object[] rowData = {s2.getStatus(), s2.getSensorId(), s2.getFloorNumber(), s2.getRoomNumber(), s2.getSmokeLevel(), s2.getCo2Level()};
+
+                dtm.addRow(rowData);
+                if (s2.getFloorNumber() > 5) {
+                    setBackground(Color.BLACK);
+                     setForeground(Color.WHITE);
+                    // setForeground(Color.WHITE);
+                }
+                //dtm.addRow();
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(SensorDetails.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         loadSernsorDetails();
     }
-        
-    
+
 }
