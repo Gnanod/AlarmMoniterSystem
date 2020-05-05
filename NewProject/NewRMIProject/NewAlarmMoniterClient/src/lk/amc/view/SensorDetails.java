@@ -6,13 +6,18 @@
 package lk.amc.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import lk.amc.controller.SensorController;
 import lk.amc.dto.Sensor;
 
@@ -22,20 +27,18 @@ import lk.amc.dto.Sensor;
  */
 public class SensorDetails extends javax.swing.JPanel implements ActionListener {
 
-   // javax.swing.Timer timer = new javax.swing.Timer(900, this);
-     javax.swing.Timer timer = new javax.swing.Timer(5000,  this);
-     
+    // javax.swing.Timer timer = new javax.swing.Timer(900, this);
+    javax.swing.Timer timer = new javax.swing.Timer(5000, this);
 
     /**
      * Creates new form SenosrDetails
      */
-    private DefaultTableModel dtm;
+   
 
     public SensorDetails() {
         initComponents();
-        dtm = (DefaultTableModel) sensorTable.getModel();
         timer.start();
-
+        loadSernsorDetails();
     }
 
     /**
@@ -47,72 +50,113 @@ public class SensorDetails extends javax.swing.JPanel implements ActionListener 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        sensorTable = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        sensorTable = new javax.swing.JTable(){
+
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+                JComponent c =(JComponent) super.prepareRenderer(renderer, row, col);
+
+                String smokeLevel =  (String)getModel().getValueAt(row, 4);
+                String co2Level = (String)getModel().getValueAt(row, 5);
+
+                //int smokeLevel  = (int)getModel().getValueAt(row,4);
+                //  System.out.println("LLL"+smokeLevel);
+                //        int co2Level  = (int)getModel().getValueAt(row,5);
+                System.out.println("KK"+co2Level);
+                if(smokeLevel!=null && co2Level !=null ){
+                    if(col==4 && Integer.parseInt(smokeLevel)>=5){
+                        c.setBackground(Color.RED);
+                        c.setForeground(Color.BLACK);
+                    }else if (col==5 && Integer.parseInt(co2Level)>=5) {
+                        c.setBackground(Color.RED);
+                        c.setForeground(Color.BLACK);
+                    } else {
+                        c.setBackground(Color.WHITE);
+                        c.setForeground(Color.BLACK);
+                    }
+                }
+
+                return c;
+            }
+        };
 
         sensorTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Status", "Sensor Id", "Floor Number", "Room Number", "Smoke Level", "Co2 Level"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-
         ));
-        jScrollPane1.setViewportView(sensorTable);
+        jScrollPane2.setViewportView(sensorTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable sensorTable;
     // End of variables declaration//GEN-END:variables
 
     private void loadSernsorDetails() {
 
         try {
-               //            ItemBrandNameDTO brandNameList = itemBrandNameController.searchItemBrandName(name);
-            //System.out.println("load");
-            List<Sensor> s1 = SensorController.getAllSensorDetails();
+            List<Sensor> sensor = SensorController.getAllSensorDetails();
+            Vector<Vector<String>> vectors = new Vector<>();
+            Vector<String> header = new Vector<>();
 
-            dtm.setRowCount(0);
-            for (Sensor s2 : s1) {
-                Object[] rowData = {s2.getStatus(), s2.getSensorId(), s2.getFloorNumber(), s2.getRoomNumber(), s2.getSmokeLevel(), s2.getCo2Level()};
+            for (Sensor s2 : sensor) {
+                Vector<String> vector = new Vector<>();
+                
+                //assign data to vector
+                vector.add(s2.getStatus());
+                vector.add(s2.getSensorId());
+                vector.add(Integer.toString(s2.getFloorNumber()));
+                vector.add(Integer.toString(s2.getRoomNumber()));
+                vector.add(Integer.toString(s2.getSmokeLevel()));
+                vector.add(Integer.toString(s2.getCo2Level()));
 
-                dtm.addRow(rowData);
-                if (s2.getFloorNumber() > 5) {
-                    setBackground(Color.BLACK);
-                     setForeground(Color.WHITE);
-                    // setForeground(Color.WHITE);
-                }
-                //dtm.addRow();
+                vectors.add(vector);
+
             }
+            
+            // Add Headers to JTable
+            header.add("Status");
+            header.add("Sensor Id");
+            header.add("Floor Number");
+            header.add("Room Number");
+            header.add("Smoke Level");
+            header.add("Co2 Level");
+            
+            //Declare Default Table Model
+            DefaultTableModel model = new DefaultTableModel(vectors, header);
+            //Add Model to sensor table
+            sensorTable.setModel(model);  //set table
         } catch (Exception ex) {
             Logger.getLogger(SensorDetails.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
- 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         loadSernsorDetails();
