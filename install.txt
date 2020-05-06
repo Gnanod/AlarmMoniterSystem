@@ -1,0 +1,16 @@
+﻿First Step - Open NewRMI Project Using NetBeans
+
+Second Step -Open FireAlarmSensor Project Using Intellij Idea
+
+Third Step - Right Click on the pom.xml in newbackend project and then add it as a maven project.
+
+Fourth Step- Go to application.properties in newbackend project and change the mysql password accordingly.
+Fifth Step - Right Cick on the Application.java in newbackend project and Run this java Class
+
+Sixth Step - Right click on the startserver.java in NewRmI project and run the file
+
+Seventh Step -Right click on the loginform.java in NewRmi project and run the file.
+
+Eigth Step - Go to clientsensorapp project and first type npm install in the terminal to install all dependencies and then type npm start
+
+Nineth Step  - Get another terminal and go to frontend project and type npm install in the terminal to install all dependencies and type npm start.
