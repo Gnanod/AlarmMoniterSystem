@@ -245,6 +245,7 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
         
         // Send encoded password and Username to the Spring Boot Api Using 
         URL obj = new URL("http://localhost:8080/userController/loginUser/" + encodedUserName + "/" + encodedPassword);
+        System.out.println("http://localhost:8080/userController/loginUser/" + encodedUserName + "/" + encodedPassword);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Content-Type", "application/json; utf-8");
