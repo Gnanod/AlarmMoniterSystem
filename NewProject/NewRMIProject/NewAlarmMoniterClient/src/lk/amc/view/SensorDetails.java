@@ -131,7 +131,6 @@ public class SensorDetails extends javax.swing.JPanel implements ActionListener 
                 vector.add(Integer.toString(s2.getRoomNumber()));
                 vector.add(Integer.toString(s2.getSmokeLevel()));
                 vector.add(Integer.toString(s2.getCo2Level()));
-
                 vectors.add(vector);
 
             }
