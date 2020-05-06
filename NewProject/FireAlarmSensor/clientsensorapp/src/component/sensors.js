@@ -29,7 +29,7 @@ export default class Sensors extends Component {
             loaderStatus: true,
         }
     }
-//Create component did mount method
+
     componentDidMount() {
         this._isMounted = true;
         this.interval = setInterval(() => {
@@ -43,7 +43,6 @@ export default class Sensors extends Component {
         this._isMounted = false;
     }
 
-//Active Sensor method
     activeSensor(sensor) {
 
         let sensorId = sensor.sensorId;
@@ -86,7 +85,7 @@ export default class Sensors extends Component {
         })
     }
 
-    //create Inactive sensor method
+   
     InactiveSensor(sensor) {
         let sensorId = sensor.sensorId;
         const  updatedSensor ={
