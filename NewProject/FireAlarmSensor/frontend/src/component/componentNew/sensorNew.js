@@ -177,6 +177,22 @@ export default class SensorBody extends Component {
                         </MDBCol>
                     </MDBRow>
                 </MDBContainer>
+                <MDBContainer>
+                    <MDBRow>
+                        <MDBCol>
+                            <MDBJumbotron style={{padding: 0}}>
+                                <MDBCol className="text-white text-center  px-2 my-2"
+                                        style={{backgroundImage: `url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg)`}}>
+                                    <MDBCol className="py-5">
+                                        <MDBCardTitle className="h1-responsive pt-3 m-5 font-bold">Sensor
+                                            Details</MDBCardTitle>
+
+                                    </MDBCol>
+                                </MDBCol>
+                            </MDBJumbotron>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBContainer>
 
                 {
                     this.state.loaderStatus ?
