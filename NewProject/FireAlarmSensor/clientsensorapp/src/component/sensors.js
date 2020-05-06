@@ -43,6 +43,7 @@ export default class Sensors extends Component {
         this._isMounted = false;
     }
 
+
     activeSensor(sensor) {
 
         let sensorId = sensor.sensorId;
@@ -85,7 +86,6 @@ export default class Sensors extends Component {
         })
     }
 
-   
     InactiveSensor(sensor) {
         let sensorId = sensor.sensorId;
         const  updatedSensor ={
