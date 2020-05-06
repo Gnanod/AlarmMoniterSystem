@@ -174,17 +174,16 @@ public class SensorController {
         }
     }
 
+    //Send Text Message
     public void sendTextMessage(String type,User user,String sensorId,int level){
-        String msg = "Enter%20Message" ;  // to spaces use %20 examle---->  Hi Hi Hi   ===> Hi%20Hi%20%20
-        System.out.println("Phone Number :"+Integer.toString(user.getPhoneNo()));
-        String number = "94" + Integer.toString(user.getPhoneNo());
-       // String number = "94" + 772218111;
+        String msg = "Enter%20Message" ;    //Text Message
+        String number = "94" + Integer.toString(user.getPhoneNo());  //Receivers Phone Number
         String accountName = "94772218111";
         String password = "8694";
-        System.out.println("hhhhhhh");
         URL textit = null;
-//        HttpURLConnection connection = null;
         try {
+
+            // Calling Message Api
             textit = new URL("http://textit.biz/sendmsg/index.php?id=" + accountName + "&pw=" + password + "&to=" + number + "&text="+msg);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(textit.openStream()));

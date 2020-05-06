@@ -60,10 +60,6 @@ public class SensorDetails extends javax.swing.JPanel implements ActionListener 
                 String smokeLevel =  (String)getModel().getValueAt(row, 4);
                 String co2Level = (String)getModel().getValueAt(row, 5);
 
-                //int smokeLevel  = (int)getModel().getValueAt(row,4);
-                //  System.out.println("LLL"+smokeLevel);
-                //        int co2Level  = (int)getModel().getValueAt(row,5);
-                System.out.println("KK"+co2Level);
                 if(smokeLevel!=null && co2Level !=null ){
                     if(col==4 && Integer.parseInt(smokeLevel)>=5){
                         c.setBackground(Color.RED);
