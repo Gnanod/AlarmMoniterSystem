@@ -160,8 +160,8 @@ public class LoginForm extends javax.swing.JFrame {
                   
               }else{
                   JOptionPane.showMessageDialog(this, "User Details are Incorrect!");
-                  usernameTxt1.setText(" ");
-                  PasswordField2.setText(" ");
+                  usernameTxt1.setText(null);
+                  PasswordField2.setText(null);
               }
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Error Occured!");

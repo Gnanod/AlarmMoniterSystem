@@ -6,6 +6,8 @@ import fas.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
+
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/userController")
@@ -24,7 +26,17 @@ public class UserController {
     // Check user credentials using username and password
     @GetMapping(value = "loginUser/{username}/{password}")
     public boolean loginUser(@PathVariable String username,@PathVariable String password) {
-        return userService.loginUser(username,password);
+
+
+        //Decoded UserName
+        byte[] decodedBytesUserName = Base64.getDecoder().decode(username);
+        String decodedUserName = new String(decodedBytesUserName);
+
+        //Decoded Password
+        byte[] decodedBytesPassword = Base64.getDecoder().decode(password);
+        String decodedPassword = new String(decodedBytesPassword);
+
+        return userService.loginUser(decodedUserName,decodedPassword);
 
     }
 }

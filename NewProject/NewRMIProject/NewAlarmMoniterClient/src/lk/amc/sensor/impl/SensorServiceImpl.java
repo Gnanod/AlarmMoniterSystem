@@ -13,6 +13,7 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import lk.amc.dto.Sensor;
 import lk.amc.dto.User;
@@ -36,6 +37,8 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
 
     @Override
     public boolean addSensor(Sensor s) throws Exception {
+        
+        //Add Sensor Details to sensor Object
         JSONObject sensorDetails = new JSONObject();
         sensorDetails.put("sensorId", s.getSensorId());
         sensorDetails.put("floorNumber", s.getFloorNumber());
@@ -44,6 +47,8 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
         sensorDetails.put("status", s.getStatus());
         JSONObject sensorObject = new JSONObject();
         sensorObject.put("Sensor", sensorDetails);
+        
+          //Send This  Sensor json object to springboot rest Api
         URL url = new URL("http://localhost:8080/SensorController/addSensor");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
@@ -74,6 +79,7 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
 
     }
 
+    //This method is use to get Last Sensor Id
     @Override
     public String getLastId() throws Exception {
         HttpURLConnection connection = null;
@@ -101,6 +107,8 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
                 connection.disconnect();
             }
         }
+        
+        //return the last sensor ID
         return content.toString();
     }
 
@@ -109,6 +117,7 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
 
         URL url;
         List<Sensor> sensorList = null;
+        //Get All Sensor Details Using Spring Boot Rest Api
         url = new URL("http://localhost:8080/SensorController/getAllSensorDetails");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -134,6 +143,7 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
                 JSONObject jobj = jsonArray.getJSONObject(i);
 
                 Sensor s = new Sensor();
+                //Convert json object data and Set it to sensor Object
                 s.setCo2Level(jobj.getInt("co2Level"));
                 s.setFloorNumber(jobj.getInt("floorNumber"));
                 s.setRoomNumber(jobj.getInt("roomNumber"));
@@ -152,7 +162,7 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
     public Sensor getSensorDetailsAccordingToID(String sensorId) throws Exception {
 
         Sensor sensor = new Sensor();
-
+        //Send Sensor Id to the Spring boot Api to get Sensor Details
         URL url = new URL("http://localhost:8080/SensorController/getSensorDetailsAccordingToID/" + sensorId);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -174,6 +184,8 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
             String result = response.toString();
 
             JSONObject jobj = new JSONObject(result);
+            
+            //Convert json object data and Set it to sensor Object
             sensor.setCo2Level(jobj.getInt("co2Level"));
             sensor.setFloorNumber(jobj.getInt("floorNumber"));
             sensor.setRoomNumber(jobj.getInt("roomNumber"));
@@ -189,6 +201,7 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
     @Override
     public boolean addUser(User user) throws Exception {
 
+        // Add User Details To the Json Object
         JSONObject userDetails = new JSONObject();
         userDetails.put("username", user.getUsername());
         userDetails.put("email", user.getEmail());
@@ -196,6 +209,7 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
         userDetails.put("password", user.getPassword());
         JSONObject userJsonObject = new JSONObject();
         userJsonObject.put("User", userDetails);
+        //Send JSON User Object to Spring boot Server
         URL url = new URL("http://localhost:8080/userController/addUser");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
@@ -223,9 +237,14 @@ public class SensorServiceImpl extends UnicastRemoteObject implements SensorServ
     @Override
     public boolean loginUser(String username, String password) throws Exception {
 
+       // Encoded UserName And Password Using Base64
+        String encodedUserName = Base64.getEncoder().encodeToString(username.getBytes());
+        String encodedPassword = Base64.getEncoder().encodeToString(password.getBytes());
+            
         User user = new User();
-        URL obj = new URL("http://localhost:8080/userController/loginUser/" + username + "/" + password);
-
+        
+        // Send encoded password and Username to the Spring Boot Api Using 
+        URL obj = new URL("http://localhost:8080/userController/loginUser/" + encodedUserName + "/" + encodedPassword);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Content-Type", "application/json; utf-8");
