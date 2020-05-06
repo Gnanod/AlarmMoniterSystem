@@ -1,9 +1,0 @@
-First Step - Open NewRMI Project Using NetBeans
-Second Step -Open FireAlarmSensor Project Using Intellij Idea
-Third Step - Add newbackend project As a maven project.
-Fourth Step- Right Cick the Application.java in newbackend and Run this java Class
-Fifth Step - right click the startserver.java in NewRmI project and click RunFile 
-Sixth Step - right click the loginform.java in NewRmi project and click RunFile.
-Seventh Step - go to clientsensorapp and first type npm install in the terminal to install all dependencies
-	       and then type npm start
-Eigth Step  - go frontend and type npm install in the terminal to install all dependencies and type npm start.

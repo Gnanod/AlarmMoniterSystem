@@ -145,8 +145,8 @@ public class SensorController {
 
     public void sendEmail(String type,User user,String sensorId,int level){
         try {
-            final String fromEmail = ""; //requires valid gmail id
-            final String password = " ";// correct password for gmail id
+            final String fromEmail = "fashionstoregtsd@gmail.com"; //requires valid gmail id
+            final String password = "Fashionstore123";// correct password for gmail id
             final String toEmail = user.getEmail(); // can be any email id
 
             System.out.println("TLSEmail Start");
