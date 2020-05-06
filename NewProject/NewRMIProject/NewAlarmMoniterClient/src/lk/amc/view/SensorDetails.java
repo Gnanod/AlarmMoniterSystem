@@ -132,6 +132,13 @@ public class SensorDetails extends javax.swing.JPanel implements ActionListener 
                 vector.add(Integer.toString(s2.getSmokeLevel()));
                 vector.add(Integer.toString(s2.getCo2Level()));
                 vectors.add(vector);
+                
+                if(s2.getCo2Level()>5){
+                    JOptionPane.showMessageDialog(this, "CO2 level of "+s2.getSensorId()+" has increased than the limit!!");
+                }
+                 if(s2.getSmokeLevel()>5){
+                    JOptionPane.showMessageDialog(this, "Smoke level of "+s2.getSensorId()+" has increased than the limit!!");
+                }
 
             }
             

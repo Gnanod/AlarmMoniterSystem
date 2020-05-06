@@ -134,11 +134,11 @@ public class SensorController {
             System.out.println(user.getEmail());
             if(type.equals("Smoke")){
                 System.err.println("Mail Co2");
-               // sendTextMessage("Co2",user,sensorId,level);
-               // sendEmail("Co2",user,sensorId,level);
+               //sendTextMessage("Smoke",user,sensorId,level);
+               sendEmail("Smoke",user,sensorId,level);
             }else{
-             //   sendTextMessage("Co2",user,sensorId,level);
-                //sendEmail("Co2",user,sensorId,level);
+              //sendTextMessage("Co2",user,sensorId,level);
+                sendEmail("Co2",user,sensorId,level);
             }
         }
     }
@@ -176,7 +176,7 @@ public class SensorController {
 
     //Send Text Message
     public void sendTextMessage(String type,User user,String sensorId,int level){
-        String msg = "Enter%20Message" ;    //Text Message
+        String msg = type+"%20level%20has%20increased%20the%20limit!!" ;    //Text Message
         String number = "94" + Integer.toString(user.getPhoneNo());  //Receivers Phone Number
         String accountName = "94772218111";
         String password = "8694";
