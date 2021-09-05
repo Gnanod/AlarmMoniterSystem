@@ -1,3 +1,7 @@
-Alarm Monitoring System is a web application where users are able to view all fire alarm sensor status. It is implemented by using technologies such as ReactJS for the frontend, spring boot for the backend. The system is a combination of a website and a REST API which is accompanied by an MYSQL database.
-A User can view the status of all fire alarm sensors and for each sensor, the system displays whether the fire alarm sensor is active, the location, smoke level and the CO2 level. If the smoke level is above 5 then the color of the chart is changed. Every 40 seconds the sensor details will update. 
-	The system will automatically generate alerts (Desktop Application and Web Application), SMS and emails when CO2 and smoke levels are above 5. SMS and emails will be sent to the user. In the RMI server there are security mechanisms like email validations, password validations and numerical validations. Also, the username, password are encoded in RMI server and decoded in REST API. 
+Alarm Monitoring System is a web application where users are able to view all fire alarm sensor status. It is implemented by using technologies such as ReactJS for 
+the frontend, spring boot for the backend. The system is a combination of a website and a REST API which is accompanied by an MYSQL database.
+A User can view the status of all fire alarm sensors and for each sensor, the system displays whether the fire alarm sensor is active, the location,
+smoke level and the CO2 level. If the smoke level is above 5 then the color of the chart is changed. Every 40 seconds the sensor details will update. 
+The system will automatically generate alerts (Desktop Application and Web Application), SMS and emails when CO2 and smoke levels are above 5. 
+SMS and emails will be sent to the user. In the RMI server there are security mechanisms like email validations, password validations and numerical validations. 
+Also, the username, password are encoded in RMI server and decoded in REST API. 
